@@ -1,0 +1,45 @@
+{{/* Copyright (c) 2026 AIperture-Labs <xavier.beheydt@gmail.com>
+   SPDX-License-Identifier: MPL-2.0 */}}
+<!doctype html>
+<html lang="{{ site.LanguageCode }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0f17">
+  <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+  {{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ site.Title }}">{{ end }}
+  {{ $css := slice (resources.Get "css/main.css") (resources.Get "css/syntax.css") | resources.Concat "css/site.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+</head>
+<body>
+  <div class="wrap">
+  <header class="site-header">
+    <span class="kicker">// AIperture Labs</span>
+    <a class="site-title" href="{{ "/" | relURL }}">{{ site.Title }}</a>
+    <nav>{{ range site.Menus.main }}<a href="{{ .URL }}">{{ .Name | lower }}</a>{{ end }}<a href="{{ "index.xml" | relURL }}">rss</a></nav>
+  </header>
+  <main>{{ block "main" . }}{{ end }}</main>
+  <footer class="site-footer">
+    © {{ now.Year }} {{ site.Copyright }} · <a href="{{ site.Params.repo }}">AetherEngine on GitHub</a> · <a href="https://github.com/AIperture-Labs">AIperture Labs</a><br>
+    Posts under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, code under MPL-2.0
+  </footer>
+  </div>
+  {{ if .Store.Get "hasMermaid" }}
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "base", themeVariables: {
+      darkMode: true, background: "#0b0f17", primaryColor: "#111827", primaryTextColor: "#e6edf3",
+      primaryBorderColor: "#38bdf8", lineColor: "#7dd3fc", secondaryColor: "#1b2333",
+      tertiaryColor: "#0b0f17", clusterBkg: "#0f1522", clusterBorder: "#243047",
+      fontFamily: "-apple-system, Segoe UI, Helvetica, Arial, sans-serif" } });
+  </script>
+  {{ end }}
+  {{ if .Store.Get "hasMath" }}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+  {{ end }}
+</body>
+</html>
