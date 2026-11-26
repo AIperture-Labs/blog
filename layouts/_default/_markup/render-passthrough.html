@@ -1,0 +1,3 @@
+{{/* Copyright (c) 2026 AIperture-Labs <xavier.beheydt@gmail.com>
+   SPDX-License-Identifier: MPL-2.0 */}}
+{{ .Page.Store.Set "hasMath" true }}{{ if eq .Type "block" }}$${{ .Inner }}$${{ else }}\({{ .Inner }}\){{ end }}

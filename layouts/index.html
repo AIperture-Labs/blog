@@ -1,0 +1,13 @@
+{{/* Copyright (c) 2026 AIperture-Labs <xavier.beheydt@gmail.com>
+   SPDX-License-Identifier: MPL-2.0 */}}
+{{ define "main" }}
+<p class="kicker">// Posts</p>
+<p class="lead">{{ site.Params.description }}</p>
+{{ range (where site.RegularPages "Section" "posts").ByDate.Reverse }}
+<article class="summary">
+  <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+  {{ partial "meta.html" . }}
+  <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 300 }}{{ end }}</p>
+</article>
+{{ end }}
+{{ end }}

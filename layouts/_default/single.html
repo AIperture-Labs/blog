@@ -1,0 +1,16 @@
+{{/* Copyright (c) 2026 AIperture-Labs <xavier.beheydt@gmail.com>
+   SPDX-License-Identifier: MPL-2.0 */}}
+{{ define "main" }}
+<article class="post">
+  <h1>{{ .Title }}</h1>
+  {{ if eq .Section "posts" }}{{ partial "meta.html" . }}{{ end }}
+  {{ if and (eq .Section "posts") (gt .WordCount 1200) }}<details class="toc"><summary>Contents</summary>{{ .TableOfContents }}</details>{{ end }}
+  {{ .Content }}
+</article>
+{{ if eq .Section "posts" }}
+<nav class="post-nav">
+  {{ with .NextInSection }}<a href="{{ .RelPermalink }}">← {{ .Title }}</a>{{ end }}
+  {{ with .PrevInSection }}<a class="next" href="{{ .RelPermalink }}">{{ .Title }} →</a>{{ end }}
+</nav>
+{{ end }}
+{{ end }}

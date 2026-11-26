@@ -1,0 +1,9 @@
+{{/* Copyright (c) 2026 AIperture-Labs <xavier.beheydt@gmail.com>
+   SPDX-License-Identifier: MPL-2.0 */}}
+{{ define "main" }}
+<h1>{{ .Title }}</h1>
+{{ .Content }}
+<ul class="archive">
+{{ range .Pages.ByDate.Reverse }}<li><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time> <a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
+</ul>
+{{ end }}
